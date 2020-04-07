@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Player/Run1.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -10,14 +10,16 @@
 [ext_resource path="res://Player/Run2.png" type="Texture" id=8]
 [ext_resource path="res://Player/Run0.png" type="Texture" id=9]
 [ext_resource path="res://Player/Jump1.png" type="Texture" id=10]
+[ext_resource path="res://back.jpg" type="Texture" id=11]
+[ext_resource path="res://corona1.png" type="Texture" id=12]
+[ext_resource path="res://corona2.png" type="Texture" id=13]
+[ext_resource path="res://corona3.png" type="Texture" id=14]
+[ext_resource path="res://enemy1.png" type="Texture" id=15]
+[ext_resource path="res://Enemy.png" type="Texture" id=16]
+[ext_resource path="res://ATCHIM.png" type="Texture" id=17]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "Jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "Idle",
@@ -27,15 +29,39 @@ animations = [ {
 "loop": true,
 "name": "Run",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "Jump",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 14.081, 27.7465 )
 
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 3.0
+} ]
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 21.2996
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 16 ), ExtResource( 15 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+} ]
+
 [node name="World" type="Node"]
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 543.053, 255.842 )
+position = Vector2( -384, 544 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -51,10 +77,53 @@ position = Vector2( 0.473328, 4.41785 )
 shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2( -1, 0 )
 current = true
+limit_top = 0
+limit_right = 600
+limit_bottom = 600
+smoothing_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
+position = Vector2( -416, 0 )
 tile_set = ExtResource( 3 )
 cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( 786439, 0, 0, 786440, 1, 0, 786441, 2, 0, 786442, 2, 0, 983053, 0, 0, 983054, 1, 0, 983055, 1, 0, 983056, 1, 0, 983057, 2, 0, 1179648, 0, 0, 1179649, 1, 0, 1179650, 1, 0, 1179651, 1, 0, 1179652, 1, 0, 1179653, 1, 0, 1179654, 1, 0, 1179655, 1, 0, 1179656, 1, 0, 1179657, 1, 0, 1179658, 1, 0, 1179659, 1, 0, 1179660, 1, 0, 1179661, 2, 0 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2( -768, -320 )
+motion_offset = Vector2( 0.2, 0.2 )
+motion_mirroring = Vector2( 1024, 512 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( -1.52588e-05, -1.52588e-05 )
+scale = Vector2( 2.00418, 1.1433 )
+texture = ExtResource( 11 )
+centered = false
+
+[node name="Monstro" type="StaticBody2D" parent="."]
+position = Vector2( -160, 548.418 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Monstro"]
+scale = Vector2( 0.3, 0.3 )
+frames = SubResource( 3 )
+animation = "Walk"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Monstro"]
+position = Vector2( -3.68929, -9.75024 )
+shape = SubResource( 4 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+scale = Vector2( 0.4, 0.4 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="StaticBody2D"]
+position = Vector2( -160, 800 )
+frames = SubResource( 5 )
+playing = true
