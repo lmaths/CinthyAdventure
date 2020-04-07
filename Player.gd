@@ -22,5 +22,7 @@ func _physics_process(delta):
 		print("está no chao")
 		if Input.is_action_pressed("ui_up"):
 			motion.y = JUMP_HEIGHT
+	else:
+		$Sprite.play("Jump")
 
 	move_and_slide(motion, UP)
