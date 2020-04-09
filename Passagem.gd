@@ -18,3 +18,5 @@ func _ready():
 
 func _on_Passagem_body_entered(body):
 	print("entrou")
+	get_tree()
+	
