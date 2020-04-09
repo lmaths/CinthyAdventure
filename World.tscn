@@ -56,7 +56,7 @@ extents = Vector2( 32, 54.9294 )
 [node name="World" type="Node"]
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( -384, 544 )
+position = Vector2( -163.689, -128 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -128,3 +128,4 @@ texture = ExtResource( 15 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Passagem"]
 position = Vector2( -629.229, -106.615 )
 shape = SubResource( 5 )
+[connection signal="body_entered" from="Passagem" to="Passagem" method="_on_Passagem_body_entered"]
